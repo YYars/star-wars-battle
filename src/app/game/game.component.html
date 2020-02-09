@@ -2,7 +2,37 @@
     <h1> Star Wars Battle </h1>
 </div>
 
-<ng-container *ngIf="!gameStarted">
+<ng-container *ngIf="gameStarted; else introductionTemplate">
+
+    <div id="game-grid-container">
+
+        <div id="switch-button">
+            <span> Characters </span>
+            <mat-slide-toggle color="warn">
+                Ships
+            </mat-slide-toggle>
+        </div>
+
+        <div id="player-left" *ngIf="player1">
+            <app-participant-card></app-participant-card>
+        </div>
+
+        <div id="score">
+            <h1> {{ playerLeftScoreObs$ | async }} : {{ playerRightScoreObs$ | async }} </h1>
+        </div>
+
+        <div id="player-right" *ngIf="player2">
+            <app-participant-card></app-participant-card>
+        </div>
+
+        <div id="roll-button">
+            <button mat-flat-button color="primary" (click)="onRollTheDice()">Roll the dice!</button>
+        </div>
+
+    </div>
+</ng-container>
+
+<ng-template #introductionTemplate>
     <div id="description">
         <h3>
             A near future, in the galaxy we live in....
@@ -17,4 +47,4 @@
         </h3>    
     </div>
     <button mat-flat-button color="primary" id="start-game-button" (click)="onStartGame()">Start Game!</button>
-</ng-container>
+</ng-template>

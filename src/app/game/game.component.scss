@@ -24,4 +24,53 @@ app-game {
             text-align: justify;
         }
     }
+
+    /* Game grid container with switch, cards, score and button */
+    #game-grid-container {
+        display: grid;
+        align-items: center;
+        width: 80vw;
+        text-align: center;
+        grid-row-gap: 6vh;
+        margin: 5vh auto;
+        grid-template-areas:
+                            ". switch ."
+                            "player-left score player-right"
+                            ". roll-button .";
+
+        #switch-button {
+            grid-area: switch;
+            span {
+                vertical-align: top;
+                display: inline-block;
+                line-height: 24px;
+                margin-right: 8px;
+            }
+        }
+
+        #player-left {
+            grid-area: player-left;
+        }
+
+        #player-right {
+            grid-area: player-right;
+        }
+
+        #score {
+            grid-area: score;
+            h1 {
+                font-size: 6em;
+            }
+
+        }
+
+        #roll-button {
+            grid-area: roll-button;
+        }
+
+    }
+
+    .mat-card-header {
+        display: block;
+    }
 }
