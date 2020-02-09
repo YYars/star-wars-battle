@@ -1,0 +1,20 @@
+<div class="title">
+    <h1> Star Wars Battle </h1>
+</div>
+
+<ng-container *ngIf="!gameStarted">
+    <div id="description">
+        <h3>
+            A near future, in the galaxy we live in....
+        </h3>
+        <h3>
+            You'll have the power to make the battle between two opponents from Star Wars Universe. You'll see two cards next to each other representing them.
+            The only thing you need is to click on "roll the dice" button and wait when system will randomly choose characters or starships to compare.
+            Once winner will be shown to you, you can reroll the dice and play again!
+        </h3>
+        <h3>
+            Sounds fun and interesting? Click on the button below and here we go!
+        </h3>    
+    </div>
+    <button mat-flat-button color="primary" id="start-game-button" (click)="onStartGame()">Start Game!</button>
+</ng-container>

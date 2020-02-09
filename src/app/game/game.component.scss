@@ -1,0 +1,27 @@
+app-game {
+
+    color: white;
+
+    /* Introduction ng-container */
+    .title {
+        padding-top: 15vh;
+        h1 {
+            padding: 2vh;
+            font-size: 4em;
+            text-align: center;
+        }
+    }
+
+    #start-game-button, #description {
+        display: block;
+        margin: 0 auto;
+    }
+
+    #description {
+        width: 40vw;
+        h3 {
+            padding: 0,5vw;
+            text-align: justify;
+        }
+    }
+}
