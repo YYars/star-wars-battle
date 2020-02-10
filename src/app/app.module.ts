@@ -10,6 +10,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { AppComponent } from './app.component';
 import { GameComponent } from './game/game.component';
 import { ParticipantCardComponent } from './game/participant-card/participant-card.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ParticipantCardComponent } from './game/participant-card/participant-ca
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatCardModule,

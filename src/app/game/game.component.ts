@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs';
+import { GameService } from './game.service';
 
 @Component({
   selector: 'app-game',
@@ -7,24 +8,20 @@ import { Observable, BehaviorSubject } from 'rxjs';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-
   gameStarted = false;
 
-  // New values will be emited as soon as someone wins
-  private playerLeftScore: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-  private playerRightScore: BehaviorSubject<number> = new BehaviorSubject<number>(0);
-
   // Observables for score displaying with async pipe
-  playerLeftScoreObs$: Observable<number> = this.playerLeftScore.asObservable();
-  playerRightScoreObs$: Observable<number> = this.playerRightScore.asObservable();
+  leftScoreObs$: Observable<number>;
+  rightScoreObs$: Observable<number>;
 
   player1: false;
   player2: false;
 
-  constructor() { }
+  constructor(private gameService: GameService) { }
 
   ngOnInit(): void {
-
+    this.leftScoreObs$ = this.gameService.playerLeftScoreObs$;
+    this.rightScoreObs$ = this.gameService.playerRightScoreObs$;
   }
 
   // Switches from introduction view to game view
