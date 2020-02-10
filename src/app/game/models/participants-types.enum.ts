@@ -1,4 +1,4 @@
-export enum OpponentsTypes {
+export enum ParticipantTypes {
     STARSHIPS,
     CHARACTERS
 }

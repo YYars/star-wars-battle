@@ -34,17 +34,26 @@ export class GameService {
     return this.httpClient.get<Starship>(`${this.SWAPI_BASE_URL}/starships/${id}`);
   }
 
-  private getRandomNumber(maxRange: number): number {
+  /**
+   * Returns random id number from given range. Number will be used for
+   * finding random entity from swapi
+   */
+  private getRandomIdNumber(maxRange: number): number {
     return Math.floor(Math.random() * maxRange);
   }
 
   private fetchRandomCharacter(): Observable<Character> {
-    const randNumber = this.getRandomNumber(this.CHARACTERS_RANGE);
+    const randNumber = this.getRandomIdNumber(this.CHARACTERS_RANGE);
     return this.fetchCharacter(randNumber);
   }
 
+  /**
+   * Fetching starship data by randomly generated id. If there's no data about starship
+   * for given id, then function retries to fetch with another generated number.
+   * @return An observable with Starship object.
+   */
   private fetchRandomStarship(): Observable<Starship> {
-    const randNumber = this.getRandomNumber(this.STARSHIPS_RANGE);
+    const randNumber = this.getRandomIdNumber(this.STARSHIPS_RANGE);
     return this.fetchStarship(randNumber).pipe(catchError(err => this.fetchRandomStarship()));
   }
 

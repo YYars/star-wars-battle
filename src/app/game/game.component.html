@@ -13,7 +13,7 @@
             </mat-slide-toggle>
         </div>
 
-        <div id="player-left" *ngIf="player1">
+        <div id="player-left" *ngIf="playerLeft">
             <app-participant-card></app-participant-card>
         </div>
 
@@ -21,7 +21,7 @@
             <h1> {{ leftScoreObs$ | async }} : {{ rightScoreObs$ | async }} </h1>
         </div>
 
-        <div id="player-right" *ngIf="player2">
+        <div id="player-right" *ngIf="playerRight">
             <app-participant-card></app-participant-card>
         </div>
 

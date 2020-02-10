@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Starship } from '../models/starship.model';
+import { Character } from '../models/character.model';
 
 @Component({
   selector: 'app-participant-card',

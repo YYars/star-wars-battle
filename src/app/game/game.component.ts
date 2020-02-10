@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GameService } from './game.service';
-import { OpponentsTypes } from './models/opponents-types.enum';
+import { ParticipantTypes } from './models/participants-types.enum';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
+import { Character } from './models/character.model';
+import { Starship } from './models/starship.model';
 
 @Component({
   selector: 'app-game',
@@ -10,15 +12,15 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
-  private opponentType: OpponentsTypes = OpponentsTypes.CHARACTERS;
+  private participantType: ParticipantTypes = ParticipantTypes.CHARACTERS;
   gameStarted = false;
 
   // Observables for score displaying with async pipe
   leftScoreObs$: Observable<number>;
   rightScoreObs$: Observable<number>;
 
-  player1: false;
-  player2: false;
+  playerLeft: Character | Starship;
+  playerRight: Character | Starship;
 
   constructor(private gameService: GameService) { }
 
@@ -38,9 +40,9 @@ export class GameComponent implements OnInit {
 
   onChange(event: MatSlideToggleChange) {
     if (event.checked) {
-      this.opponentType = OpponentsTypes.STARSHIPS;
+      this.participantType = ParticipantTypes.STARSHIPS;
     } else {
-      this.opponentType = OpponentsTypes.CHARACTERS;
+      this.participantType = ParticipantTypes.CHARACTERS;
     }
   }
 
