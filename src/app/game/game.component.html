@@ -14,7 +14,7 @@
         </div>
 
         <div id="player-left" *ngIf="playerLeft">
-            <app-participant-card></app-participant-card>
+            <app-participant-card [participant]="playerLeft"></app-participant-card>
         </div>
 
         <div id="score">
@@ -22,7 +22,7 @@
         </div>
 
         <div id="player-right" *ngIf="playerRight">
-            <app-participant-card></app-participant-card>
+            <app-participant-card [participant]="playerRight"></app-participant-card>
         </div>
 
         <div id="roll-button">

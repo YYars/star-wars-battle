@@ -1,6 +1,16 @@
 app-participant-card {
-    display: inline-block;
-    .example-card {
-        max-width: 20vw;
-      }
+  display: inline-block;
+  .example-card {
+      width: 20vw;
+    }
+
+    mat-card-content {
+      white-space: pre-line;
+      text-align: initial;
+    }
+
+    ul {
+      padding: 1vw;
+      list-style-type: none;
+    }
 }

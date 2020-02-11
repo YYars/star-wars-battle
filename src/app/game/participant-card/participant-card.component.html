@@ -1,7 +1,46 @@
 <mat-card class="example-card" color="warn">
     <mat-card-header>
-        <mat-card-title></mat-card-title>
+        <mat-card-title>
+            <h1>
+                {{ participant.name }}
+            </h1>
+        </mat-card-title>
     </mat-card-header>
     <mat-card-content>
+        <ng-container *ngIf="isStarship(); then starship; else character">
+
+        </ng-container>
     </mat-card-content>
 </mat-card>
+
+<ng-template #starship>
+    <ul>
+        <li> MGLT: {{ participant.MGLT }} </li>
+        <li> Cargo capacity: {{ participant.cargo_capacity }}</li>
+        <li> Consumables: {{ participant.consumables }} </li>
+        <li> Cost in credits: {{ participant.cost_in_credits }} </li>
+        <li> Crew: {{ participant.crew }}</li>
+        <li> Hyperdrive rating: {{ participant.hyperdrive_rating }}</li>
+        <li> Length: {{ participant.length }}</li>
+        <li> Manufacturer: {{ participant.manufacturer }}</li>
+        <li> Max atmosphering speed: {{ participant.max_atmosphering_speed }}</li>
+        <li> Model: {{ participant.model }}</li>
+        <li> Passengers: {{ participant.passengers }}</li>
+        <li> Starship class: {{ participant.starship_class }}</li>
+    </ul>
+
+</ng-template>
+
+<ng-template #character>
+    <ul>
+        <li> Birth year: {{ participant.birth_year }}</li>
+        <li> Eye color: {{ participant.eye_color }}</li>
+        <li> Gender: {{ participant.gender }}</li>
+        <li> Hair color: {{ participant.hair_color }}</li>
+        <li> Height: {{ participant.height }}</li>
+        <li> Mass: {{ participant.mass }}</li>
+        <li> Name: {{ participant.name }}</li>
+        <li> Skin color: {{ participant.skin_color }}</li>
+    </ul>
+
+</ng-template>

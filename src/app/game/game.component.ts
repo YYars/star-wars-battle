@@ -35,7 +35,23 @@ export class GameComponent implements OnInit {
   }
 
   onRollTheDice() {
-    // TO-DO
+    switch (this.participantType) {
+      case (ParticipantTypes.CHARACTERS):
+        this.gameService.getRandomCharacters().subscribe(
+          (resultArray: Character[]) => {
+            this.playerLeft = resultArray[0];
+            this.playerRight = resultArray[1];
+          }
+        );
+        break;
+      case (ParticipantTypes.STARSHIPS):
+        this.gameService.getRandomStarships().subscribe(
+          (resultArray: Starship[]) => {
+            this.playerLeft = resultArray[0];
+            this.playerRight = resultArray[1];
+          }
+        );
+    }
   }
 
   onChange(event: MatSlideToggleChange) {
