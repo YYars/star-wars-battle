@@ -51,6 +51,57 @@ export class GameService {
   }
 
   /**
+   * Checking which character has bigger height value and updating score.
+   * If height values are even, each participant will have point as winner.
+   * @param resultArray Characters array with 2 objects
+   */
+  chooseCharacterWinner(resultArray: Character[]) {
+    // Getting current score values to increment them after
+    const currentLeftScore: number = this.playerLeftScore.value;
+    const currentRightScore: number = this.playerRightScore.value;
+
+    const leftPlayerHeight: number = +resultArray[0].height ? +resultArray[0].height : 0;
+    const rightPlayerHeight: number = +resultArray[1].height ? +resultArray[1].height : 0;
+
+    if (leftPlayerHeight === rightPlayerHeight) {
+      // Updating scores
+      this.updateScore(currentLeftScore + 1, currentRightScore + 1);
+    } else if (leftPlayerHeight > rightPlayerHeight) {
+      this.updateScore(currentLeftScore + 1, currentRightScore);
+    } else {
+      this.updateScore(currentLeftScore, currentRightScore + 1);
+    }
+  }
+
+  private updateScore(leftScore: number, rightScore: number) {
+    this.playerLeftScore.next(leftScore);
+    this.playerRightScore.next(rightScore);
+  }
+
+  /**
+   * Checking which starship has bigger crew value and updating score.
+   * If crew values are even, each participant will have point as winner.
+   * @param resultArray Starships array with 2 objects
+   */
+  chooseStarshipWinner(resultArray: Starship[]) {
+    // Getting current score values to increment them after
+    const currentLeftScore: number = this.playerLeftScore.value;
+    const currentRightScore: number = this.playerRightScore.value;
+
+    const leftPlayerCrew: number = +resultArray[0].crew ? +resultArray[0].crew : 0;
+    const rightPlayerCrew: number = +resultArray[1].crew ? +resultArray[1].crew : 0;
+
+    if (leftPlayerCrew === rightPlayerCrew) {
+      // Updating scores
+      this.updateScore(currentLeftScore + 1, currentRightScore + 1);
+    } else if (leftPlayerCrew > rightPlayerCrew) {
+      this.updateScore(currentLeftScore + 1, currentRightScore);
+    } else {
+      this.updateScore(currentLeftScore, currentRightScore + 1);
+    }
+  }
+
+  /**
    * Fetching random characters page, then get random entity from response array.
    * @return An observable with Character object.
    */

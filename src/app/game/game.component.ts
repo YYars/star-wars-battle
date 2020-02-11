@@ -39,6 +39,7 @@ export class GameComponent implements OnInit {
       case (ParticipantTypes.CHARACTERS):
         this.gameService.getRandomCharacters().subscribe(
           (resultArray: Character[]) => {
+            this.gameService.chooseCharacterWinner(resultArray);
             this.playerLeft = resultArray[0];
             this.playerRight = resultArray[1];
           }
@@ -47,6 +48,7 @@ export class GameComponent implements OnInit {
       case (ParticipantTypes.STARSHIPS):
         this.gameService.getRandomStarships().subscribe(
           (resultArray: Starship[]) => {
+            this.gameService.chooseStarshipWinner(resultArray);
             this.playerLeft = resultArray[0];
             this.playerRight = resultArray[1];
           }
