@@ -5,6 +5,11 @@
                 {{ participant.name }}
             </h1>
         </mat-card-title>
+        <mat-card-subtitle>
+            <h1 [style.color]='getResultStyle()'>
+                {{ result }}
+            </h1>
+        </mat-card-subtitle>
     </mat-card-header>
     <mat-card-content>
         <ng-container *ngIf="isStarship(); then starship; else character">

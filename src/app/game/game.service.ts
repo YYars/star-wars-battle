@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, forkJoin } from 'rxjs';
+import { Observable, BehaviorSubject, forkJoin, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Character, CharacterPageResponse } from './models/character.model';
 import { Starship, StarshipPageResponse } from './models/starship.model';
+import { GameResult } from './shared/game-result.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,12 @@ export class GameService {
   // New values will be emited as soon as someone wins
   private playerLeftScore: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private playerRightScore: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+
+  private playerLeftResult: Subject<GameResult> = new Subject();
+  private playerRightResult: Subject<GameResult> = new Subject();
+
+  playerLeftResultObs$: Observable<GameResult> = this.playerLeftResult.asObservable();
+  playerRightResultObs$: Observable<GameResult> = this.playerRightResult.asObservable();
 
   // Observables for score displaying with async pipe
   playerLeftScoreObs$: Observable<number> = this.playerLeftScore.asObservable();
@@ -66,16 +73,24 @@ export class GameService {
     if (leftPlayerHeight === rightPlayerHeight) {
       // Updating scores
       this.updateScore(currentLeftScore + 1, currentRightScore + 1);
+      this.updateWinner(GameResult.WIN, GameResult.WIN);
     } else if (leftPlayerHeight > rightPlayerHeight) {
       this.updateScore(currentLeftScore + 1, currentRightScore);
+      this.updateWinner(GameResult.WIN, GameResult.LOSE);
     } else {
       this.updateScore(currentLeftScore, currentRightScore + 1);
+      this.updateWinner(GameResult.LOSE, GameResult.WIN);
     }
   }
 
   private updateScore(leftScore: number, rightScore: number) {
     this.playerLeftScore.next(leftScore);
     this.playerRightScore.next(rightScore);
+  }
+
+  private updateWinner(playerLeft: GameResult, playerRight: GameResult) {
+    this.playerRightResult.next(playerRight);
+    this.playerLeftResult.next(playerLeft);
   }
 
   /**
@@ -94,10 +109,13 @@ export class GameService {
     if (leftPlayerCrew === rightPlayerCrew) {
       // Updating scores
       this.updateScore(currentLeftScore + 1, currentRightScore + 1);
+      this.updateWinner(GameResult.WIN, GameResult.WIN);
     } else if (leftPlayerCrew > rightPlayerCrew) {
       this.updateScore(currentLeftScore + 1, currentRightScore);
+      this.updateWinner(GameResult.WIN, GameResult.LOSE);
     } else {
       this.updateScore(currentLeftScore, currentRightScore + 1);
+      this.updateWinner(GameResult.LOSE, GameResult.WIN);
     }
   }
 

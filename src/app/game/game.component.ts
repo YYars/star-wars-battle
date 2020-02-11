@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { GameService } from './game.service';
-import { ParticipantTypes } from './models/participants-types.enum';
+import { ParticipantTypes } from './shared/participants-types.enum';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Character } from './models/character.model';
 import { Starship } from './models/starship.model';
+import { GameResult } from './shared/game-result.enum';
 
 @Component({
   selector: 'app-game',
@@ -19,6 +20,9 @@ export class GameComponent implements OnInit {
   leftScoreObs$: Observable<number>;
   rightScoreObs$: Observable<number>;
 
+  playerLeftResult: GameResult;
+  playerRightResult: GameResult;
+
   playerLeft: Character | Starship;
   playerRight: Character | Starship;
 
@@ -27,6 +31,15 @@ export class GameComponent implements OnInit {
   ngOnInit(): void {
     this.leftScoreObs$ = this.gameService.playerLeftScoreObs$;
     this.rightScoreObs$ = this.gameService.playerRightScoreObs$;
+
+    // Subscribing to game results
+    this.gameService.playerLeftResultObs$.subscribe(result => {
+      this.playerLeftResult = result;
+    });
+
+    this.gameService.playerRightResultObs$.subscribe(result => {
+      this.playerRightResult = result;
+    });
   }
 
   // Switches from introduction view to game view
