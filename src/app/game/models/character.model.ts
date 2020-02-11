@@ -8,3 +8,7 @@ export interface Character {
     name: string;
     skin_color: string;
 }
+
+export interface CharacterPageResponse {
+    results: Character[];
+}

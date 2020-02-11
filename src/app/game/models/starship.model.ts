@@ -13,3 +13,7 @@ export interface Starship {
     passengers: string;
     starship_class: string;
 }
+
+export interface StarshipPageResponse {
+    results: Starship[];
+}
