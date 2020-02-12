@@ -20,7 +20,7 @@ export class ParticipantCardComponent implements OnInit {
   }
 
   isStarship(): boolean {
-    if ('pilots' in this.participant) {
+    if ('cost_in_credits' in this.participant) {
       return true;
     }
     return false;
