@@ -66,6 +66,7 @@ export class GameComponent implements OnInit {
             this.playerRight = resultArray[1];
           }
         );
+        break;
     }
   }
 
