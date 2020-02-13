@@ -20,7 +20,7 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 ## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+In order to run end-to-end tests, you need to run dev server with `ng serve` and then run `npm run cypress:run` to execute the end-to-end tests via [Cypress](https://www.cypress.io/).
 
 ## Further help
 
