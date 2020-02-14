@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { GameService } from './game.service';
 import { ParticipantTypes } from './shared/participants-types.enum';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';

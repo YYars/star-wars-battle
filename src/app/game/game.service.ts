@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, forkJoin, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, BehaviorSubject, forkJoin, Subject, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 import { Character, CharacterPageResponse } from './models/character.model';
 import { Starship, StarshipPageResponse } from './models/starship.model';
 import { GameResult } from './shared/game-result.enum';
@@ -37,8 +37,8 @@ export class GameService {
     return this.httpClient.get<CharacterPageResponse>(`${this.SWAPI_BASE_URL}/people/?page=${pageNumber}`);
   }
 
-  private fetchStarshipsPage(id: number): Observable<StarshipPageResponse> {
-    return this.httpClient.get<StarshipPageResponse>(`${this.SWAPI_BASE_URL}/starships/?page=${id}`);
+  private fetchStarshipsPage(pageNumber: number): Observable<StarshipPageResponse> {
+    return this.httpClient.get<StarshipPageResponse>(`${this.SWAPI_BASE_URL}/starships/?page=${pageNumber}`);
   }
 
   /**
@@ -83,16 +83,6 @@ export class GameService {
     }
   }
 
-  private updateScore(leftScore: number, rightScore: number) {
-    this.playerLeftScore.next(leftScore);
-    this.playerRightScore.next(rightScore);
-  }
-
-  private updateWinner(playerLeft: GameResult, playerRight: GameResult) {
-    this.playerRightResult.next(playerRight);
-    this.playerLeftResult.next(playerLeft);
-  }
-
   /**
    * Checking which starship has bigger crew value and updating score.
    * If crew values are even, each participant will have point as winner.
@@ -119,6 +109,16 @@ export class GameService {
     }
   }
 
+  private updateScore(leftScore: number, rightScore: number) {
+    this.playerLeftScore.next(leftScore);
+    this.playerRightScore.next(rightScore);
+  }
+
+  private updateWinner(playerLeft: GameResult, playerRight: GameResult) {
+    this.playerRightResult.next(playerRight);
+    this.playerLeftResult.next(playerLeft);
+  }
+
   /**
    * Fetching random characters page, then get random entity from response array.
    * @return An observable with Character object.
@@ -131,7 +131,8 @@ export class GameService {
           // Get random character from array, by generating random number knowing array length
           const randomEntityNumber = this.getRandomEntityNumber(resp.results.length);
           return resp.results[randomEntityNumber];
-        }));
+        }),
+        catchError(this.handleError));
   }
 
   /**
@@ -146,7 +147,8 @@ export class GameService {
           // Get random starship from array, by generating random number knowing array length
           const randomEntityNumber = this.getRandomEntityNumber(resp.results.length);
           return resp.results[randomEntityNumber];
-        }));
+        }),
+        catchError(this.handleError));
   }
 
   getRandomCharacters(): Observable<Character[]> {
@@ -155,5 +157,10 @@ export class GameService {
 
   getRandomStarships(): Observable<Starship[]> {
     return forkJoin([this.fetchRandomStarship(), this.fetchRandomStarship()]);
+  }
+
+  private handleError(errorRes: HttpErrorResponse) {
+    // TO-DO inform user about an error occurred
+    return throwError(`Server responded with error "${errorRes.error.detail}" and status ${errorRes.status}`);
   }
 }

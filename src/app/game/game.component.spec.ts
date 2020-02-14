@@ -96,6 +96,33 @@ describe('GameComponent', () => {
       expect(component.gameStarted).toBeTruthy();
     });
 
+    it('should call getRandomCharacters in rolltheDice method if slider was not touched', async () => {
+
+      gameService.getRandomCharacters.and.returnValue(of([mockCharacter, mockCharacter]));
+
+      const isSliderChecked = await slider.isChecked();
+
+      expect(isSliderChecked).toBeFalsy();
+
+      await rollTheDiceButton.click();
+
+      expect(gameService.getRandomCharacters).toHaveBeenCalled();
+    });
+
+    it('should not display introduction description after clicking "Start Game!" button', () => {
+
+      const description = debugElement.query(By.css('#description'));
+
+      expect(description).toBeNull();
+    });
+
+    it('should not display "Start Game!" button after clicking on it', () => {
+
+      const startButtonAfter = debugElement.query(By.css('#start-game-button'));
+
+      expect(startButtonAfter).toBeNull();
+    });
+
     describe('After slider has been toggled', () => {
       beforeEach(async () => {
         await slider.toggle();
@@ -128,33 +155,6 @@ describe('GameComponent', () => {
 
         expect(gameService.getRandomCharacters).toHaveBeenCalled();
       });
-    });
-
-    it('should call getRandomCharacters in rolltheDice method if slider was not touched', async () => {
-
-      gameService.getRandomCharacters.and.returnValue(of([mockCharacter, mockCharacter]));
-
-      const isSliderChecked = await slider.isChecked();
-
-      expect(isSliderChecked).toBeFalsy();
-
-      await rollTheDiceButton.click();
-
-      expect(gameService.getRandomCharacters).toHaveBeenCalled();
-    });
-
-    it('should not display introduction description after clicking "Start Game!" button', () => {
-
-      const description = debugElement.query(By.css('#description'));
-
-      expect(description).toBeNull();
-    });
-
-    it('should not display "Start Game!" button after clicking on it', () => {
-
-      const startButtonAfter = debugElement.query(By.css('#start-game-button'));
-
-      expect(startButtonAfter).toBeNull();
     });
   });
 });
